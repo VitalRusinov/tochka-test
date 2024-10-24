@@ -1,0 +1,84 @@
+.container {
+  flex: 1;
+  padding: 0 20px;
+  box-sizing: border-box;
+
+  overflow-y: scroll; /* Включаем вертикальную прокрутку */
+  scrollbar-width: none; /* Скрываем скроллбар */
+  -ms-overflow-style: none; /* Скрываем скроллбар */
+
+  .header {
+    width: 100%;
+    height: 60px;
+    display: flex;
+    align-items: center;
+
+    span {
+      font-family: var(--font-family);
+      font-weight: 600;
+      font-size: 1.5rem;
+      line-height: 125%;
+      color: #191919;
+    }
+  }
+
+  .content {
+    border-radius: 10px;
+    width: 100%;
+    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.05);
+    background: #fff;
+    box-sizing: border-box;
+    padding: 0 20px 20px 20px;
+
+    .filters {
+      width: 100%;
+      height: 4.5rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: #fff;
+
+      position: sticky;
+      top: -1px;
+
+      .filter_button {
+        border-radius: 10px;
+        height: 2rem;
+        background: #f3f3f3;
+        border: none;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 10px;
+        padding: 0 15px 0 10px;
+
+        span {
+          font-weight: 500;
+          font-size: 0.875rem;
+          line-height: 129%;
+          letter-spacing: 0.01em;
+          text-align: center;
+          color: #191919;
+        }
+
+        &:hover {
+          background: #e8e8e8;
+        }
+      }
+    }
+
+    .transactions {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+
+      .transactionCard {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.container::-webkit-scrollbar {
+  display: none; /* Полностью скрываем скроллбар */
+}

@@ -6,12 +6,12 @@ const getEventsHandler = http.get('/api/events', eventsResolver);
 const finalCountRequest = Math.round(Math.random() * 5);
 let countRequest = 0;
 let currentDay = Date.now();
-enum typeEvents {
+export enum typeEvents {
     Balance = 'Balance',
     Notification = 'Notification'
 }
 
-interface IEvent {
+export interface IEvent {
     // Гарантируется, что события уже отсортированы по дате на бэке
     date: Date;
     // Главный текст

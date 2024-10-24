@@ -1,0 +1,63 @@
+.container {
+  padding: 15px 20px;
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+
+  .balance {
+    width: 7.5rem;
+    vertical-align: top;
+
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 125%;
+    letter-spacing: 0.01em;  
+  }
+
+  .negative {
+    color: #949494;
+  }
+
+  .positive {
+    color: #5cad9a;
+  }
+
+  .info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    .title {
+      font-weight: 500;
+      font-size: 1rem;
+      line-height: 125%;
+      letter-spacing: 0.01em;
+      color: #191919;
+    }
+
+    .description {
+      font-weight: 400;
+      font-size: 0.875rem;
+      line-height: 129%;
+      letter-spacing: 0.01em;
+      color: #676767;
+    }
+
+    .optionalDescription {
+      font-weight: 400;
+      font-size: 0.75rem;
+      line-height: 125%;
+      letter-spacing: 0.01em;
+      color: #676767;
+    }
+  }
+
+  .logo {
+    width: 34px;
+    height: 34px;
+    overflow: hidden;
+    position: relative;
+    //не получается повторить superellipse
+    border-radius: 100%;
+  }
+}

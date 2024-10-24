@@ -1,0 +1,83 @@
+.container {
+  width: 100%;
+  height: 74px;
+  padding: 20px;
+  box-sizing: border-box;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  border-bottom: 1px solid #e1e1e1;;
+
+  &  * {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+  }
+
+  .logo {
+    min-width: 166px;
+    padding: 0px 20px;
+    gap: 10px;
+    flex: 1;
+
+    .indicator {
+      width: 20px;
+      height: 20px;
+      justify-content: center;
+
+      .dot {
+        border-radius: 100px;
+        width: 8px;
+        height: 8px;
+        background: #d84d4d;
+      }
+    }
+  }
+
+  .nav {
+    flex: 4;
+    padding: 0 20px;
+    gap:10px;
+
+    .navBtn {
+      width: 6.125rem;
+      height: 2.5rem;
+      border-radius: 10px;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      font-weight: 500;
+      font-size: 1rem;
+      line-height: 125%;
+      letter-spacing: 0.01em;
+      color: #191919;
+
+      transition: 0.3s ease;
+
+      &:hover {
+        background: rgba(25, 25, 25, 0.05);
+      }
+
+      &:active {
+        background: rgba(25, 25, 25, 0.05);
+        color: #835de1;
+      }
+
+      &:hover:active {
+        background: #e8e8e8;
+      }
+    }
+  }
+
+  .settings {
+    min-width: 156px;
+    justify-content: end;
+    flex: 1;
+    padding: 0 20px;
+    gap: 20px;
+  }
+}
