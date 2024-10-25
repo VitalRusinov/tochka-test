@@ -15,11 +15,22 @@
   }
 
   .negative {
-    color: #949494;
+    color: #191919;
   }
 
   .positive {
     color: #5cad9a;
+  }
+
+  .service {
+    width: 7.5rem;
+    vertical-align: top;
+
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 125%;
+    letter-spacing: 0.01em;
+    color: #191919;
   }
 
   .info {
@@ -58,6 +69,26 @@
     overflow: hidden;
     position: relative;
     //не получается повторить superellipse
-    border-radius: 100%;
+    border-radius: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .invoice {
+    background: #91c089;
   }
 }
+
+.date_container {
+  width: 100%;
+  height: 3.5rem;
+
+  span {
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 130%;
+    color: #191919;
+  }
+}
+

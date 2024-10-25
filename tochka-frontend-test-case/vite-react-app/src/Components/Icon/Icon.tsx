@@ -11,10 +11,10 @@ const Icon: React.FC<IconProps> = ({ name, alt }) => {
   const IconSrc = iconsMap[name]; // Используем 'name' с расширением '.svg'
 
   if (!IconSrc) {
-    return <span className={styles.span}>not found</span>;
+    return <span>not found</span>;
   }
 
-  return <img src={IconSrc} alt={alt || name} className={styles.img}/>;
+  return <img src={IconSrc} alt={alt || name} />;
 };
 
 export default Icon;

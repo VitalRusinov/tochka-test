@@ -4,12 +4,6 @@ import { IEvent, typeEvents } from '../../../mocks/handlers';
 import Icon from '../../Icon/Icon';
 import classNames from 'classnames';
 
-/*
-export enum typeEvents {
-    Balance = 'Balance',
-    Notification = 'Notification'
-}
-    */
 interface props {
   transaction: IEvent;
 }
@@ -29,6 +23,18 @@ const TransactionCard: React.FC<props> = ({transaction}) => {
     }
   }
 
+  const getLogoClasses = () => {
+    return classNames(styles.logo, {
+      [styles.invoice]: title.slice(0, 7) === "Счёт на",
+    });
+
+  }
+
+  const getDate = (date: Date) => {
+    const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long' };
+    return new Intl.DateTimeFormat('ru-RU', options).format(date);
+  }
+
   if (type === typeEvents.Balance) {
     return (
       <div className={styles.container}>
@@ -38,7 +44,7 @@ const TransactionCard: React.FC<props> = ({transaction}) => {
           <span className={styles.description}>{description}</span>
           <span className={styles.optionalDescription}>{optionalDescription}</span>
         </div>
-        <div className={styles.logo}>
+        <div className={getLogoClasses()}>
           <Icon name={icon}/>
         </div>
       </div>
@@ -46,9 +52,39 @@ const TransactionCard: React.FC<props> = ({transaction}) => {
   }
 
   if (type === typeEvents.Notification) {
-    
+    return (
+      <div className={styles.container}>
+        <div className={styles.service}>{service}</div>
+        <div className={styles.info}>
+          <span className={styles.title}>{title}</span>
+          <span className={styles.description}>{description}</span>
+        </div>
+        <div className={getLogoClasses()}>
+          <Icon name={icon}/>
+        </div>
+      </div>
+    )
+  }
+
+  if (type === typeEvents.Date) {
+    return (
+      <div className={styles.date_container}>
+        <div className={styles.dates}>
+          <span>{title}</span>
+          <span>{getDate(date)}</span>
+          <span>{description}</span>
+        </div>
+      </div>
+    )
   }
 
 }
 
 export default TransactionCard;
+
+/*        title: 'Готова аналитика по вашим операциям за 3 месяца',
+        description: '13:40',
+        icon: 'Non Financial Event.svg',
+        type: typeEvents.Notification,
+        service: 'Карты',
+        */

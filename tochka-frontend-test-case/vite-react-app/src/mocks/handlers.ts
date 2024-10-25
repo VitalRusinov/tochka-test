@@ -8,7 +8,8 @@ let countRequest = 0;
 let currentDay = Date.now();
 export enum typeEvents {
     Balance = 'Balance',
-    Notification = 'Notification'
+    Notification = 'Notification',
+    Date = 'Date'
 }
 
 export interface IEvent {
@@ -66,15 +67,15 @@ const dataset : Array<Omit<IEvent, 'date'>> = [
     {
         title: 'Сидоров Д.В., ИП',
         description: 'По договору №8923 от 10 октября 2022 в т.ч. НДС 20%',
-        icon: '№6884, 13:40',
+        icon: 'Sarovbiznesbank.svg',
         type: typeEvents.Balance,
         balance: '– 250 000 ₽',
-        optionalDescription: ''
+        optionalDescription: '№6884, 13:40'
     },
     {
         title: 'Счёт на оплату №170 от 21.10.22',
         description: '****2626',
-        icon: 'Services/Document Paid.svg',
+        icon: 'Document Paid.svg',
         type: typeEvents.Balance,
         balance: '+ 12 560 ₽',
         optionalDescription: '13:40'
