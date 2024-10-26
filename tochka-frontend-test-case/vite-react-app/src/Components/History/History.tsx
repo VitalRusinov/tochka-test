@@ -1,108 +1,72 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import _ from 'lodash';
+import classNames from 'classnames';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 import TransactionCard from './TransactionCard/TransactionCard';
-
 import { IEvent, typeEvents } from '../../mocks/handlers';
+import { getFormattedData } from '../../utils/getFormattedData';
+
+import Down from '/Stroked/Arrow_down.svg';
+import Up from '/Stroked/Arrow_up.svg';
+
 import styles from './History.module.scss';
-import Arrow from '/Stroked/Arrow.svg';
 
 const History = () => {
-  const [data, setData] = useState<IEvent[]>([]); // Состояние для хранения постов
-  const [loading, setLoading] = useState<boolean>(false); // Состояние загрузки
-  const [hasMore, setHasMore] = useState<boolean>(true); // Флаг наличия данных
-  const observer = useRef<IntersectionObserver | null>(null); // Ссылка на IntersectionObserver
+  // Состояние для хранения операций
+  const [data, setData] = useState<IEvent[]>([]); // Загруженные операции
+  const [formattedData, setFormattedData] = useState<IEvent[]>([]); // Отформатированные операции
 
-  //Состояния для фильтров
-  const [typeFilter, setTypeFilter] = useState<Omit<{ [key in typeEvents]: boolean }, typeEvents.Date>>({
+  // Для хранения состояний загрузки
+  const [loading, setLoading] = useState<boolean>(false); // Состояние загрузки
+  const [hasMore, setHasMore] = useState<boolean>(true); // Флаг наличия данных для загрузки
+  const observer = useRef<IntersectionObserver | null>(null); // Ссылка на последний элемент, который инициирует загрузку новых данных
+
+  //Состояния для фильтра по типам
+  const [typeFilter, setTypeFilter] =  useState<{ [key in typeEvents]: boolean }>({
     [typeEvents.Balance]: true,
     [typeEvents.Notification]: true,
-});
-  const [showTypeFilter, setShowTypeFilter] = useState(false);
+    [typeEvents.Date]: true,
+  });
 
-  // Вспомогательная функция-предикат для сравнения двух дат
-  function isThisIsOneDay(date1: Date, date2: Date): boolean {
-    return date1.getDate() === date2.getDate() &&
-          date1.getMonth() === date2.getMonth() &&
-          date1.getFullYear() === date2.getFullYear();
-  }
+  // Состояния для фильтра по диапазону дат
+  const [startDate, setStartDate] = useState<Date | undefined>(undefined);
+  const [endDate, setEndDate] = useState<Date | undefined>(undefined);
 
-  //Вспомогательная функция для добавления "Сегодня, вчера"
-  const getTitle = (today: Date, date: Date): string => {
-    // Проверка на "сегодня"
-    if (isThisIsOneDay(today, date)) return "Сегодня, ";
-
-    // Проверка на "вчера"
-    const yesterday = new Date(today); // Создаем новый объект на основе today
-    yesterday.setDate(today.getDate() - 1); // Уменьшаем день на 1
-    if (isThisIsOneDay(yesterday, date)) return "Вчера, ";
-
-    return '';
-  }
-
-  //Вспомогательная функция для создания элемента "Дата"
-  const createDateEl = (date: Date, title: string, description: string = ''): IEvent => {
-    return {
-      date,
-      title,
-      description,
-      type: typeEvents.Date,
-      icon: '',
-    }
-  }
-
-  //Функция для добавления элементов "Дата" в массив с данными
-  const getFormattedData = (newFetchData: IEvent[], data: IEvent[]): IEvent[] => {
-    const today = new Date();
-    let currentDate = data.length === 0 ? today : new Date(data[data.length - 1].date);
-    const formattedData: IEvent[] = [];
-
-    //Создание первой "Даты" в списке
-    if (data.length === 0) {
-      console.log(data, 'data', data.length, 'data.length');
-      const date = new Date(newFetchData[0].date)
-      const firstDate = createDateEl(date, getTitle(today, date));
-      formattedData.push(firstDate);
-    }
-
-    newFetchData.forEach((item) => {
-      const { date } = item;
-      const formDate = new Date(date)
-      if (!isThisIsOneDay(currentDate, formDate)) {
-        const dateEl = createDateEl(formDate, getTitle(today, formDate));
-        formattedData.push(dateEl);
-        currentDate = formDate;
-      }
-      formattedData.push(item);
-    })
-
-    return formattedData;
-  }
+  //Состояние какой фильтр открыт в данный момент (чтоб был открыт только один за раз)
+  const [showFilter, setShowFilter] = useState<string | boolean>(false)
 
   // Функция для загрузки данных
-  const fetchData = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch('/api/events');
-      const JsonResponse = await response.json();
-      const newData: IEvent[] = JsonResponse.data;
-      console.log('response newData:', newData)
+  // useCallback используется для использования актуальных данных из состояний
+  const fetchData = useCallback(async () => {
+    if (loading || !hasMore) return; // Предотвращаем лишние запросы
 
-      // Если нет новых данных, устанавливаем флаг hasMore в false
+    setLoading(true); // Устанавливаем флаг загрузки
+    try {
+      const response = await fetch('/api/events'); // Отправляем запрос к серверу
+      const JsonResponse = await response.json(); // Получаем JSON-ответ
+      const newData: IEvent[] = JsonResponse.data; // Извлекаем события из ответа
+
       if (newData.length === 0) {
-        setHasMore(false);
+        setHasMore(false); // Если данных больше нет, останавливаем загрузку
       } else {
-        setData((prevData) => {
-          const newFormattedData = getFormattedData(newData, prevData); // Используем предыдущее состояние
-          return [...prevData, ...newFormattedData]; // Обновляем состояние
-        });
+        setData((prevData) => [...prevData, ...newData]); // Обновляем состояние с новыми данными
+
+        // Проверка, достигли ли мы конца диапазона
+        const oldestEvent = newData[newData.length - 1]; // Самая старая дата в текущей порции обновлений
+        const oldestEventDate = new Date (oldestEvent.date);
+
+        if (startDate && oldestEventDate < startDate) {
+          setHasMore(false); // Больше загружать не нужно
+        }
       }
     } catch (error) {
-      console.error("Ошибка при загрузке данных:", error);
+      console.error('Ошибка при загрузке данных:', error); // Логируем ошибку, если что-то пошло не так
     } finally {
-      setLoading(false);
+      setLoading(false); // Снимаем флаг загрузки в любом случае
     }
-  };
+  }, [startDate, endDate, hasMore, loading]);
 
   // Колбэк для отслеживания последнего элемента
   const lastElementRef = useCallback((node: HTMLDivElement | null) => {
@@ -110,20 +74,61 @@ const History = () => {
 
     observer.current = new IntersectionObserver((entries) => {
       if (entries[0].isIntersecting && hasMore) {
-        console.log('Последний элемент виден. Загружаем данные...');
-        fetchData(); // Загружаем новые данные
+        console.log('Последний элемент виден. Загрузка данных...');
+        fetchData();
       }
     });
 
     if (node) observer.current.observe(node); // Наблюдаем за новым элементом
-  }, [hasMore]);
+  }, [hasMore, loading, fetchData])
 
   // Эффект для первоначальной загрузки данных
   useEffect(() => {
     fetchData();
   }, []);
+  
+  //Разрешаем загрузку при изменении диапазона дат
+  useEffect(() => {
+    setHasMore(true);
+  }, [startDate, endDate]);
 
+  //Форматирование списка (фильтрация, добавление "Дат")
+  useEffect(() => {
+    if (data.length === 0) return;
+    // Фильтрация данных по типу
+    const typeFilteredData = data.filter(item => typeFilter[item.type]);
+    
+    // Фильтрация данных по диапазону дат
+    const filteredData = typeFilteredData.filter((event) => {
+      if (!startDate || !endDate) return true; // Если даты не выбраны, показываем все
+      const eventDate = new Date (event.date);
+      const fullEndDate = new Date(endDate);
+      fullEndDate.setHours(23, 59, 59, 999);
+     // return isWithinInterval(eventDate, { start: startDate, end: fullEndDate });
+      return eventDate >= startDate && eventDate <= fullEndDate;
+    });
 
+    //Форматирование списка
+    const formattedData = getFormattedData(filteredData);    
+    setFormattedData(formattedData);
+  }, [data, typeFilter, startDate, endDate]);
+
+  // Обработчик изменения состояния чекбоксов
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, checked } = event.target;
+    setTypeFilter((prev) => ({
+      ...prev,
+      [name]: checked,
+    }));
+  };
+
+  // Классы для кнопок фильтров
+  const type_filter_button_classes = classNames(styles.filter_button, showFilter === 'type' ? styles.active : '');
+  const date_filter_button_classes = classNames(styles.filter_button, showFilter === 'date' ? styles.active : '');
+
+  // Действия для кнопок, открывающих фильтры
+  const handlerTypeFilter = () => showFilter === 'type' ? setShowFilter(false) : setShowFilter('type');
+  const handlerDateFilter = () => showFilter === 'date' ? setShowFilter(false) : setShowFilter('date');
 
   return (
     <div className={styles.container}>
@@ -132,27 +137,82 @@ const History = () => {
       </div>
       <div className={styles.content}>
         <div className={styles.filters}>
-          <button className={styles.filter_button}>
-            <span>Тип операции</span>
-            <img src={Arrow} alt="" />
-          </button>
-          <button className={styles.filter_button}>
-            <span>Период</span>
-            <img src={Arrow} alt="" />
-          </button>
+
+          <div className={styles.typeFilter}>
+            <button onClick={handlerTypeFilter} className={type_filter_button_classes}>
+              <span>Тип операции</span>
+              <img src={showFilter === 'type' ? Up : Down} alt="" />
+            </button>
+            {(showFilter === 'type') && (
+              <div className={styles.filter_options}>
+                <label className={styles.custom_checkbox}>
+                  <input
+                    type="checkbox"
+                    name={typeEvents.Balance}
+                    checked={typeFilter[typeEvents.Balance]}
+                    onChange={handleCheckboxChange}
+                  />
+                  <span className={styles.checkmark}></span>
+                  Баланс
+                </label>
+                <label className={styles.custom_checkbox}>
+                  <input
+                    type="checkbox"
+                    name={typeEvents.Notification}
+                    checked={typeFilter[typeEvents.Notification]}
+                    onChange={handleCheckboxChange}
+                  />
+                  <span className={styles.checkmark}></span>
+                  Уведомления
+                </label>
+              </div>
+            )}
+          </div>
+          
+          <div className={styles.dateFilter}>
+            <button onClick={handlerDateFilter} className={date_filter_button_classes}>
+              <span>Период</span>
+              <img src={showFilter === 'date' ? Up : Down} alt="" />
+            </button>
+            {/* Календарь для выбора диапазона дат */}
+            {(showFilter === 'date') && (
+              <div className={styles.filter_options}>
+                <DatePicker
+                  selected={startDate}
+                  onChange={(date) => setStartDate(date ?? undefined)} // Устанавливаем undefined, если date = null
+                  selectsStart
+                  startDate={startDate}
+                  endDate={endDate}
+                  placeholderText="Начальная дата"
+                  dateFormat="dd.MM.yyyy"
+                />
+                <DatePicker
+                  selected={endDate}
+                  onChange={(date) => setEndDate(date ?? undefined)} // Устанавливаем undefined, если date = null
+                  selectsEnd
+                  startDate={startDate}
+                  endDate={endDate}
+                  minDate={startDate}
+                  placeholderText="Конечная дата"
+                  dateFormat="dd.MM.yyyy"
+                />
+              </div>
+            )}
+          </div>      
+
           <button className={styles.filter_button}>
             <span>Счёт</span>
-            <img src={Arrow} alt="" />
+            <img src={Down} alt="" />
           </button>
           <button className={styles.filter_button}>
             <span>Карта</span>
-            <img src={Arrow} alt="" />
+            <img src={Down} alt="" />
           </button>
         </div>
         <div className={styles.transactions}>
-          {data.map((transaction, index) => {
+          {formattedData.length > 0 && formattedData.map((transaction, index) => {
             // Если это последний элемент, устанавливаем ref
-            if (index === data.length - 1) {
+            if (index === formattedData.length - 1) {
               return (
                 <div key={_.uniqueId()} ref={lastElementRef} className={styles.transactionCard}>
                   <TransactionCard transaction={transaction}/>
@@ -172,4 +232,3 @@ const History = () => {
 };
 
 export default History;
-

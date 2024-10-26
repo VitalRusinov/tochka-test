@@ -66,6 +66,121 @@
           background: #e8e8e8;
         }
       }
+
+      .active {
+        background: #e8e8e8;
+        border-radius: 10px 10px 0 0;
+      }
+
+      .typeFilter {
+        position: relative;
+
+        .filter_options {
+          position: absolute;
+
+          width: 10rem;
+          height: 4.2rem;
+          padding: 1rem;
+          border-radius: 0 10px 10px 10px;
+          background: #e8e8e8;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          .custom_checkbox {
+            width: 100%;
+            height: 2rem;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+
+            font-weight: 500;
+            font-size: 1rem;
+            line-height: 129%;
+            letter-spacing: 0.01em;
+            text-align: center;
+            color: #191919;
+          }
+          
+          .custom_checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+          }
+          
+          .custom_checkbox .checkmark {
+            width: 1.125rem;
+            height: 1.125rem;
+            border: 2px solid #252525;
+            border-radius: 4px;
+            background-color: white;
+            display: inline-block;
+            margin-right: 0.5rem;
+            position: relative;
+            transition: background-color 0.2s;
+          }
+          
+          .checkmark:hover {
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+          }
+
+          .custom_checkbox input:checked + .checkmark {
+            background-color: #252525;
+          }
+
+          .custom_checkbox .checkmark::after {
+            content: '';
+            position: absolute;
+            display: none;
+            left: 5.5px;
+            top: 0.5px;
+            width: 6px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+          }
+          
+          .custom_checkbox input:checked + .checkmark::after {
+            display: block;
+          }          
+        }
+      }
+
+      .dateFilter {
+        position: relative;
+
+        .filter_options {
+          position: absolute;
+
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          width: 10rem;
+          height: 4.2rem;
+          padding: 1rem;
+          border-radius: 0 10px 10px 10px;
+          background: #e8e8e8;
+        
+          input {
+            width: 9rem;
+            padding: 0.2rem;
+            border: 2px solid #252525;
+            border-radius: 5px;
+            font-size: 1rem;
+            color: #191919;
+          }
+        
+          input::placeholder {
+            color: #949494;
+          }
+        }
+      }
     }
 
     .transactions {
