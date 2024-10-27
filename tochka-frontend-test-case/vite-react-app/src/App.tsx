@@ -1,6 +1,9 @@
 import styles from './App.module.scss';
+import FooterMenu from './Components/FooterMenu/FooterMenu';
 import History from './Components/History/History';
 import Menu from './Components/Menu/Menu';
+
+import Lightning_button from '/Filled/Lightning_button.svg';
 
 // Основной компонент
 const App = () => {
@@ -24,6 +27,10 @@ const App = () => {
           </div>
         </div>
       </main>
+      <div className={styles.lightning_button}>
+        <img src={Lightning_button} alt="" />
+      </div>
+      <FooterMenu />
     </div>
   );
 };

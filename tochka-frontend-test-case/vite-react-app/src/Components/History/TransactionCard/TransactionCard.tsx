@@ -38,12 +38,14 @@ const TransactionCard: React.FC<props> = ({transaction}) => {
   if (type === typeEvents.Balance) {
     return (
       <div className={styles.container}>
-        <div className={getBalanceClasses()}>{balance}</div>
-        <div className={styles.info}>
-          <span className={styles.title}>{title}</span>
-          <span className={styles.description}>{description}</span>
-          <span className={styles.optionalDescription}>{optionalDescription}</span>
-        </div>
+        <div className={styles.withoutLogo}>
+          <div className={getBalanceClasses()}>{balance}</div>
+          <div className={styles.info}>
+            <span className={styles.title}>{title}</span>
+            <span className={styles.description}>{description}</span>
+            <span className={styles.optionalDescription}>{optionalDescription}</span>
+          </div>
+          </div>        
         <div className={getLogoClasses()}>
           <Icon name={icon}/>
         </div>
@@ -54,10 +56,12 @@ const TransactionCard: React.FC<props> = ({transaction}) => {
   if (type === typeEvents.Notification) {
     return (
       <div className={styles.container}>
-        <div className={styles.service}>{service}</div>
-        <div className={styles.info}>
-          <span className={styles.title}>{title}</span>
-          <span className={styles.description}>{description}</span>
+        <div className={styles.withoutLogo}>
+          <div className={styles.service}>{service}</div>
+          <div className={styles.info}>
+            <span className={styles.title}>{title}</span>
+            <span className={styles.description}>{description}</span>
+          </div>
         </div>
         <div className={getLogoClasses()}>
           <Icon name={icon}/>
@@ -81,10 +85,3 @@ const TransactionCard: React.FC<props> = ({transaction}) => {
 }
 
 export default TransactionCard;
-
-/*        title: 'Готова аналитика по вашим операциям за 3 месяца',
-        description: '13:40',
-        icon: 'Non Financial Event.svg',
-        type: typeEvents.Notification,
-        service: 'Карты',
-        */

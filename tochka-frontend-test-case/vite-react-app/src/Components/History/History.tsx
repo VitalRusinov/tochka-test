@@ -10,8 +10,14 @@ import { getFormattedData } from '../../utils/getFormattedData';
 
 import Down from '/Stroked/Arrow_down.svg';
 import Up from '/Stroked/Arrow_up.svg';
+import Pen from '/Stroked/Pen.svg';
+import Plus from '/Stroked/Plus.svg';
 
 import styles from './History.module.scss';
+import LoadingContent from './LoadingContent/LoadingContent';
+import EmptyList from './EmptyList/EmptyList';
+import LoadingError from './LoadingError/LoadingError';
+import EndList from './EndList/EndList';
 
 const History = () => {
   // Состояние для хранения операций
@@ -22,6 +28,9 @@ const History = () => {
   const [loading, setLoading] = useState<boolean>(false); // Состояние загрузки
   const [hasMore, setHasMore] = useState<boolean>(true); // Флаг наличия данных для загрузки
   const observer = useRef<IntersectionObserver | null>(null); // Ссылка на последний элемент, который инициирует загрузку новых данных
+
+  //Состояние какой фильтр открыт в данный момент (чтоб был открыт только один за раз)
+  const [showFilter, setShowFilter] = useState<string | boolean>(false)
 
   //Состояния для фильтра по типам
   const [typeFilter, setTypeFilter] =  useState<{ [key in typeEvents]: boolean }>({
@@ -34,8 +43,8 @@ const History = () => {
   const [startDate, setStartDate] = useState<Date | undefined>(undefined);
   const [endDate, setEndDate] = useState<Date | undefined>(undefined);
 
-  //Состояние какой фильтр открыт в данный момент (чтоб был открыт только один за раз)
-  const [showFilter, setShowFilter] = useState<string | boolean>(false)
+  // Состояние для хранения флага наличия ошибки
+  const [error, setError] = useState<boolean>(false);
 
   // Функция для загрузки данных
   // useCallback используется для использования актуальных данных из состояний
@@ -43,6 +52,8 @@ const History = () => {
     if (loading || !hasMore) return; // Предотвращаем лишние запросы
 
     setLoading(true); // Устанавливаем флаг загрузки
+    setError(false);  // Устанавливаем флаг отсутствия ошибки
+
     try {
       const response = await fetch('/api/events'); // Отправляем запрос к серверу
       const JsonResponse = await response.json(); // Получаем JSON-ответ
@@ -62,6 +73,7 @@ const History = () => {
         }
       }
     } catch (error) {
+      setError(true);
       console.error('Ошибка при загрузке данных:', error); // Логируем ошибку, если что-то пошло не так
     } finally {
       setLoading(false); // Снимаем флаг загрузки в любом случае
@@ -126,6 +138,9 @@ const History = () => {
   const type_filter_button_classes = classNames(styles.filter_button, showFilter === 'type' ? styles.active : '');
   const date_filter_button_classes = classNames(styles.filter_button, showFilter === 'date' ? styles.active : '');
 
+  //Класы для .filters
+  const filters_classes = classNames(styles.filters, showFilter === false ? '' : styles.active);
+
   // Действия для кнопок, открывающих фильтры
   const handlerTypeFilter = () => showFilter === 'type' ? setShowFilter(false) : setShowFilter('type');
   const handlerDateFilter = () => showFilter === 'date' ? setShowFilter(false) : setShowFilter('date');
@@ -134,9 +149,11 @@ const History = () => {
     <div className={styles.container}>
       <div className={styles.header}>
         <span>История</span>
+        {data.length === 0 && <img src={Pen} alt="" className={styles.not_mobile}/>}
+        {data.length === 0 && <img src={Plus} alt="" className={styles.mobile}/>}
       </div>
       <div className={styles.content}>
-        <div className={styles.filters}>
+        <div className={filters_classes}>
 
           <div className={styles.typeFilter}>
             <button onClick={handlerTypeFilter} className={type_filter_button_classes}>
@@ -225,8 +242,12 @@ const History = () => {
               </div>
             )
           })}
+          {formattedData.length !== 0 && !hasMore && <EndList />}
+          {formattedData.length === 0 && !hasMore && <EmptyList />}
+          {formattedData.length === 0 && error && <LoadingError />}
         </div>
       </div>
+      {data.length === 0 && loading && <LoadingContent />}
     </div>
   );
 };

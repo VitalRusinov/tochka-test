@@ -22,16 +22,17 @@ const Menu = () => {
         <a href="#" className={styles.navBtn}>Сервисы</a>
       </nav>
       <div className={styles.settings}>
-        <div className={styles.button}>
+        <div className={styles.button_mobile}>
           <img src={Bell} alt="Bell" />
+          <div className={styles.dot}></div>
         </div>
-        <div className={styles.button}>
+        <div className={styles.button_not_mobile}>
           <img src={InviteMan} alt="Invite Man Button" />
         </div>
-        <div className={styles.button}>
+        <div className={styles.button_mobile}>
           <img src={Gear} alt="Gear" />
         </div>
-        <div className={styles.button}>
+        <div className={styles.button_not_mobile}>
           <img src={Logout} alt="Logout Button" />
         </div>
       </div>

@@ -1,0 +1,32 @@
+.container {
+  margin-top: 2vh;
+  width: 100%;
+  height: 38vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 2vh;
+
+  span {
+    font-weight: 400;
+    font-size: 1rem;
+    line-height: 125%;
+    letter-spacing: 0.01em;
+    text-align: center;
+    color: #676767;
+
+    white-space: pre-wrap;
+  }
+
+  .svg_container {
+    width: 54px;
+    height: 54px;
+    border-radius: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.05);
+  }
+}

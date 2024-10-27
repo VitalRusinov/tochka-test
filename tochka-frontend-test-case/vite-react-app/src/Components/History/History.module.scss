@@ -2,23 +2,30 @@
   flex: 1;
   padding: 0 20px;
   box-sizing: border-box;
-
+  
+  overflow-x: hidden; /* Скрываем горизонтальную прокрутку */
   overflow-y: scroll; /* Включаем вертикальную прокрутку */
   scrollbar-width: none; /* Скрываем скроллбар */
   -ms-overflow-style: none; /* Скрываем скроллбар */
 
   .header {
-    width: 100%;
-    height: 60px;
+    width: calc(100% - 40px);
+    height: 100px;
+    padding-bottom: 25px;
     display: flex;
-    align-items: center;
+    align-items: end;
+    justify-content: space-between;
+    box-sizing: border-box;
 
     span {
-      font-family: var(--font-family);
       font-weight: 600;
-      font-size: 1.5rem;
+      font-size: 1.875rem;
       line-height: 125%;
       color: #191919;
+    }
+
+    .mobile {
+      display: none;
     }
   }
 
@@ -28,7 +35,7 @@
     box-shadow: 0 5px 15px 0 rgba(0, 0, 0, 0.05);
     background: #fff;
     box-sizing: border-box;
-    padding: 0 20px 20px 20px;
+    padding: 0 20px;
 
     .filters {
       width: 100%;
@@ -60,6 +67,7 @@
           letter-spacing: 0.01em;
           text-align: center;
           color: #191919;
+          white-space: nowrap;
         }
 
         &:hover {
@@ -192,9 +200,60 @@
         width: 100%;
       }
     }
-  }
+  }  
 }
 
 .container::-webkit-scrollbar {
   display: none; /* Полностью скрываем скроллбар */
+}
+
+@media (width <= 767px) {
+  .container {
+    padding: 0;
+    .header {
+      width: 100%;
+      height: 66px;
+      margin-top: 15px;
+      padding: 0;
+      align-items: center;
+  
+      .not_mobile {
+        display: none;
+      }
+      .mobile {
+        display: block;
+      }
+    }
+
+    .content {
+      padding: 0;  
+      .filters {
+        overflow-x: auto; // добавляем горизонтальную прокрутку
+        -webkit-overflow-scrolling: touch; // добавляем плавный скролл на мобильных
+        scrollbar-width: none; // скрываем полосу прокрутки для Firefox
+
+        z-index: 2; // ставим фильтры выше других элементов
+      
+        &::-webkit-scrollbar {
+          display: none; // скрываем полосу прокрутки для Chrome, Safari и Edge
+        }
+
+        &.active {
+          height: 9rem; /* Установите максимальную высоту для открытого состояния, подгоните под ваши нужды */
+          overflow: hidden; /* Скрываем переполнение */
+          align-items: flex-start;
+        }
+      }
+  
+      .transactions {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+  
+        .transactionCard {
+          width: 100%;
+        }
+      }
+    }  
+  }
 }

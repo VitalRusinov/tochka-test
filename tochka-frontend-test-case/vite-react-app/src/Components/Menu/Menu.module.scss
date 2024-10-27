@@ -79,5 +79,48 @@
     flex: 1;
     padding: 0 20px;
     gap: 20px;
+
+    .button_mobile {
+      position: relative;
+
+      .dot {
+        border-radius: 100px;
+        width: 8px;
+        height: 8px;
+        background: #d84d4d;
+        position: absolute;
+        top: -4px;
+        right: -4px;
+        display: none;
+      }
+    }
+  }
+}
+
+@media (width <= 767px) {
+  .container {
+    height: 64px;
+    padding: 20px 0;
+    border-bottom: none;
+
+    .logo {
+      display: none;
+    }
+  
+    .nav {
+      display: none;
+    }
+  
+    .settings {
+      .button_not_mobile {
+        display: none;
+      }
+
+      .button_mobile {
+        .dot {
+          display: block;
+        }
+      }
+    }
   }
 }

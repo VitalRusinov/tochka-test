@@ -4,62 +4,73 @@
   justify-content: space-between;
   gap: 20px;
 
-  .balance {
-    width: 7.5rem;
-    vertical-align: top;
-
-    font-weight: 600;
-    font-size: 1rem;
-    line-height: 125%;
-    letter-spacing: 0.01em;  
-  }
-
-  .negative {
-    color: #191919;
-  }
-
-  .positive {
-    color: #5cad9a;
-  }
-
-  .service {
-    width: 7.5rem;
-    vertical-align: top;
-
-    font-weight: 600;
-    font-size: 1rem;
-    line-height: 125%;
-    letter-spacing: 0.01em;
-    color: #191919;
-  }
-
-  .info {
-    flex: 1;
+  .withoutLogo {
     display: flex;
-    flex-direction: column;
+    justify-content: space-between;
+    gap: 20px;
 
-    .title {
-      font-weight: 500;
+    .balance {
+      width: 7.5rem;
+      vertical-align: top;
+  
+      font-weight: 600;
+      font-size: 1rem;
+      line-height: 125%;
+      letter-spacing: 0.01em;  
+    }
+  
+    .negative {
+      color: #191919;
+    }
+  
+    .positive {
+      color: #5cad9a;
+    }
+
+    .service {
+      width: 7.5rem;
+      vertical-align: top;
+  
+      font-weight: 600;
       font-size: 1rem;
       line-height: 125%;
       letter-spacing: 0.01em;
       color: #191919;
     }
 
-    .description {
-      font-weight: 400;
-      font-size: 0.875rem;
-      line-height: 129%;
-      letter-spacing: 0.01em;
-      color: #676767;
-    }
-
-    .optionalDescription {
-      font-weight: 400;
-      font-size: 0.75rem;
-      line-height: 125%;
-      letter-spacing: 0.01em;
-      color: #676767;
+    .info {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+  
+      .title {
+        font-weight: 500;
+        font-size: 1rem;
+        line-height: 125%;
+        letter-spacing: 0.01em;
+        color: #191919;
+      }
+  
+      .description {
+        font-weight: 400;
+        font-size: 0.875rem;
+        line-height: 129%;
+        letter-spacing: 0.01em;
+        color: #676767;
+        display: -webkit-box; /* Используем flex-контейнер с поддержкой обрезки */
+        -webkit-line-clamp: 2; /* Максимальное количество строк */
+        -webkit-box-orient: vertical;
+        overflow: hidden; /* Обрезаем текст, который не вмещается */
+        text-overflow: ellipsis; /* Добавляем многоточие */
+      }
+  
+      .optionalDescription {
+        font-weight: 400;
+        font-size: 0.75rem;
+        line-height: 125%;
+        letter-spacing: 0.01em;
+        color: #676767;
+      }
     }
   }
 
@@ -95,3 +106,35 @@
   }
 }
 
+@media (width <= 767px) {
+  .date_container {
+    padding-left: 0;
+  }
+
+  .container {
+    padding: 15px 0;
+    position: relative;
+    flex-direction: row-reverse;
+  
+    .withoutLogo {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      width: auto;
+      flex: 1;
+      gap: 10px;
+
+      .balance {
+        width: auto;
+      }
+
+      .service {
+        width: auto;
+      }
+  
+      .info {
+        gap: 5px;
+      }
+    }
+  }
+}

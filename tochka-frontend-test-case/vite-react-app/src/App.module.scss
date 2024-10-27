@@ -28,7 +28,7 @@
       .left_menu {
         height: 100%;
         width: 69%;
-        min-width: 200px;
+        min-width: 170px;
         max-width: 380px;
   
         justify-self: start;
@@ -45,6 +45,7 @@
           line-height: 120%;
           color: #191919;
           opacity: 0.25;
+          text-align: center;
         }      
       }
     }    
@@ -66,7 +67,7 @@
       .widgets {
         height: 100%;
         width: 90.3%;
-        min-width: 200px;
+        min-width: 170px;
         max-width: 500px;
 
         justify-self: end;
@@ -83,18 +84,73 @@
           line-height: 120%;
           color: #191919;
           opacity: 0.25;
+          text-align: center;
         }   
+      }
+    }
+  }
+
+  .lightning_button {
+    display: none;
+    position: fixed;
+    bottom: 75px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 10;
+  }
+}
+
+@media (width <= 1320px) {
+  .container {
+    .main {
+      padding: 0 10px;
+      gap: 0px;
+
+      .wrapper_left {  
+        .left_menu {
+          width: 100%;     
+        }
+      }  
+      .wrapper_right {
+        .widgets {
+          width: 100%;  
+        }
       }
     }
   }
 }
 
-@media (width <= 1320px) {
-  .wrapper_left {
-    display: none;
-  }
+@media (width <= 1024px) {
+  .container {
+    height: 100svh;
+    .main {
+      padding: 0 20px;
+      .wrapper_left {  
+        display: none;
+      }
 
-  .wrapper_right {
-    display: none;
+      .history {
+        height: 100%;
+        width: 100vw;
+        min-width: 300px;
+      }
+
+      .wrapper_right {
+        display: none;
+      }
+    }
+  }
+}
+
+@media (width <= 767px) {
+  .container {
+    .main {
+      background: #fff;
+      padding: 0 20px;
+    }
+
+    .lightning_button {
+      display: block;
+    }
   }
 }
