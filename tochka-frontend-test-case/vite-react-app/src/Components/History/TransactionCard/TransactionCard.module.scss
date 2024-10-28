@@ -8,8 +8,10 @@
     display: flex;
     justify-content: space-between;
     gap: 20px;
+    flex: 1;
 
-    .balance {
+    .balance,
+    .service {
       width: 7.5rem;
       vertical-align: top;
   
@@ -25,17 +27,6 @@
   
     .positive {
       color: #5cad9a;
-    }
-
-    .service {
-      width: 7.5rem;
-      vertical-align: top;
-  
-      font-weight: 600;
-      font-size: 1rem;
-      line-height: 125%;
-      letter-spacing: 0.01em;
-      color: #191919;
     }
 
     .info {
@@ -97,12 +88,21 @@
   padding-left: 15%;
   display: flex;
   align-items: center;
+  box-sizing: border-box;
 
   span {
     font-weight: 600;
     font-size: 1.25rem;
     line-height: 130%;
     color: #191919;
+  }
+}
+@media (width <= 1320px) {
+  .container {
+    gap: 10px;
+    .withoutLogo {
+      gap: 10px;
+    }
   }
 }
 
@@ -122,7 +122,6 @@
       align-items: start;
       width: auto;
       flex: 1;
-      gap: 10px;
 
       .balance {
         width: auto;

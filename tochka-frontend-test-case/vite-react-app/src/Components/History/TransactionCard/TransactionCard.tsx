@@ -45,7 +45,7 @@ const TransactionCard: React.FC<props> = ({transaction}) => {
             <span className={styles.description}>{description}</span>
             <span className={styles.optionalDescription}>{optionalDescription}</span>
           </div>
-          </div>        
+        </div>        
         <div className={getLogoClasses()}>
           <Icon name={icon}/>
         </div>

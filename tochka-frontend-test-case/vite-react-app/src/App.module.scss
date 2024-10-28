@@ -7,6 +7,7 @@
 
   .header {
     width: 100%;
+    height: 74px;
   }
 
   .main {
@@ -108,12 +109,22 @@
 
       .wrapper_left {  
         .left_menu {
-          width: 100%;     
+          width: 100%;
+          min-width: 100px;
+          span {
+            writing-mode: vertical-rl; /* Вертикальное направление текста справа налево */
+            font-size: 1.5rem;
+          }
         }
       }  
       .wrapper_right {
         .widgets {
-          width: 100%;  
+          width: 100%;
+          min-width: 100px; 
+          span {
+            writing-mode: vertical-rl; /* Вертикальное направление текста справа налево */
+            font-size: 1.5rem;
+          }
         }
       }
     }
@@ -122,16 +133,15 @@
 
 @media (width <= 1024px) {
   .container {
-    height: 100svh;
+    height: 100dvh;
     .main {
-      padding: 0 20px;
       .wrapper_left {  
         display: none;
       }
 
       .history {
         height: 100%;
-        width: 100vw;
+        width: 80vw;
         min-width: 300px;
       }
 
