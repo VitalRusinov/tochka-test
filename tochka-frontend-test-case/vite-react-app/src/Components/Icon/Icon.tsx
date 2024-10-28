@@ -14,7 +14,7 @@ const Icon: React.FC<IconProps> = ({ name, alt }) => {
     return <span>not found</span>;
   }
 
-  return <img src={IconSrc} alt={alt || name} className={styles.img}/>;
+  return <img src={IconSrc} alt={alt || name} className={styles.img} />;
 };
 
 export default Icon;

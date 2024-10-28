@@ -2,7 +2,7 @@
   flex: 1;
   padding: 0 20px;
   box-sizing: border-box;
-  
+
   overflow-x: hidden; /* Скрываем горизонтальную прокрутку */
   overflow-y: scroll; /* Включаем вертикальную прокрутку */
   scrollbar-width: none; /* Скрываем скроллбар */
@@ -112,7 +112,7 @@
             text-align: center;
             color: #191919;
           }
-          
+
           .custom_checkbox input {
             position: absolute;
             opacity: 0;
@@ -120,7 +120,7 @@
             height: 0;
             width: 0;
           }
-          
+
           .custom_checkbox .checkmark {
             width: 1.125rem;
             height: 1.125rem;
@@ -132,7 +132,7 @@
             position: relative;
             transition: background-color 0.2s;
           }
-          
+
           .checkmark:hover {
             box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
           }
@@ -153,10 +153,10 @@
             border-width: 0 2px 2px 0;
             transform: rotate(45deg);
           }
-          
+
           .custom_checkbox input:checked + .checkmark::after {
             display: block;
-          }          
+          }
         }
       }
 
@@ -175,7 +175,7 @@
           padding: 1rem;
           border-radius: 0 10px 10px 10px;
           background: #e8e8e8;
-        
+
           input {
             width: 9rem;
             padding: 0.2rem;
@@ -184,7 +184,7 @@
             font-size: 1rem;
             color: #191919;
           }
-        
+
           input::placeholder {
             color: #949494;
           }
@@ -201,7 +201,7 @@
         width: 100%;
       }
     }
-  }  
+  }
 }
 
 .container::-webkit-scrollbar {
@@ -217,7 +217,7 @@
       margin-top: 15px;
       padding: 0;
       align-items: center;
-  
+
       .not_mobile {
         display: none;
       }
@@ -227,14 +227,14 @@
     }
 
     .content {
-      padding: 0;  
+      padding: 0;
       .filters {
         overflow-x: auto; // добавляем горизонтальную прокрутку
         -webkit-overflow-scrolling: touch; // добавляем плавный скролл на мобильных
         scrollbar-width: none; // скрываем полосу прокрутки для Firefox
 
         z-index: 2; // ставим фильтры выше других элементов
-      
+
         &::-webkit-scrollbar {
           display: none; // скрываем полосу прокрутки для Chrome, Safari и Edge
         }
@@ -245,16 +245,16 @@
           align-items: flex-start;
         }
       }
-  
+
       .transactions {
         width: 100%;
         display: flex;
         flex-direction: column;
-  
+
         .transactionCard {
           width: 100%;
         }
       }
-    }  
+    }
   }
 }

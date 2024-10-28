@@ -8,9 +8,17 @@ interface props {
   transaction: IEvent;
 }
 
-const TransactionCard: React.FC<props> = ({transaction}) => {
-
-  const {date, title, description, optionalDescription, type, icon, balance, service} = transaction;
+const TransactionCard: React.FC<props> = ({ transaction }) => {
+  const {
+    date,
+    title,
+    description,
+    optionalDescription,
+    type,
+    icon,
+    balance,
+    service,
+  } = transaction;
 
   const getBalanceClasses = () => {
     if (balance === undefined) {
@@ -21,19 +29,21 @@ const TransactionCard: React.FC<props> = ({transaction}) => {
         [styles.negative]: balance.startsWith('-'),
       });
     }
-  }
+  };
 
   const getLogoClasses = () => {
     return classNames(styles.logo, {
-      [styles.invoice]: title.slice(0, 7) === "Счёт на",
+      [styles.invoice]: title.slice(0, 7) === 'Счёт на',
     });
-
-  }
+  };
 
   const getDate = (date: Date) => {
-    const options: Intl.DateTimeFormatOptions = { day: 'numeric', month: 'long' };
+    const options: Intl.DateTimeFormatOptions = {
+      day: 'numeric',
+      month: 'long',
+    };
     return new Intl.DateTimeFormat('ru-RU', options).format(date);
-  }
+  };
 
   if (type === typeEvents.Balance) {
     return (
@@ -43,14 +53,16 @@ const TransactionCard: React.FC<props> = ({transaction}) => {
           <div className={styles.info}>
             <span className={styles.title}>{title}</span>
             <span className={styles.description}>{description}</span>
-            <span className={styles.optionalDescription}>{optionalDescription}</span>
+            <span className={styles.optionalDescription}>
+              {optionalDescription}
+            </span>
           </div>
-        </div>        
+        </div>
         <div className={getLogoClasses()}>
-          <Icon name={icon}/>
+          <Icon name={icon} />
         </div>
       </div>
-    )
+    );
   }
 
   if (type === typeEvents.Notification) {
@@ -64,10 +76,10 @@ const TransactionCard: React.FC<props> = ({transaction}) => {
           </div>
         </div>
         <div className={getLogoClasses()}>
-          <Icon name={icon}/>
+          <Icon name={icon} />
         </div>
       </div>
-    )
+    );
   }
 
   if (type === typeEvents.Date) {
@@ -79,9 +91,8 @@ const TransactionCard: React.FC<props> = ({transaction}) => {
           <span>{description}</span>
         </div>
       </div>
-    )
+    );
   }
-
-}
+};
 
 export default TransactionCard;

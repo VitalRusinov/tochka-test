@@ -17,9 +17,15 @@ const Menu = () => {
         </div>
       </div>
       <nav className={styles.nav}>
-        <a href="#" className={styles.navBtn}>Главная</a>
-        <a href="#" className={styles.navBtn}>Платежи</a>
-        <a href="#" className={styles.navBtn}>Сервисы</a>
+        <a href="#" className={styles.navBtn}>
+          Главная
+        </a>
+        <a href="#" className={styles.navBtn}>
+          Платежи
+        </a>
+        <a href="#" className={styles.navBtn}>
+          Сервисы
+        </a>
       </nav>
       <div className={styles.settings}>
         <div className={styles.button_mobile}>
@@ -37,7 +43,7 @@ const Menu = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default Menu;

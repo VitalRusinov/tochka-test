@@ -31,15 +31,15 @@
         width: 69%;
         min-width: 170px;
         max-width: 380px;
-  
+
         justify-self: start;
-  
+
         background: #f4f4f4;
         border-radius: 10px;
         display: flex;
         justify-content: center;
         align-items: center;
-  
+
         span {
           font-weight: 600;
           font-size: 1.875rem;
@@ -47,9 +47,9 @@
           color: #191919;
           opacity: 0.25;
           text-align: center;
-        }      
+        }
       }
-    }    
+    }
 
     .history {
       height: 100%;
@@ -86,7 +86,7 @@
           color: #191919;
           opacity: 0.25;
           text-align: center;
-        }   
+        }
       }
     }
   }
@@ -107,7 +107,7 @@
       padding: 0 10px;
       gap: 0px;
 
-      .wrapper_left {  
+      .wrapper_left {
         .left_menu {
           width: 100%;
           min-width: 100px;
@@ -116,11 +116,11 @@
             font-size: 1.5rem;
           }
         }
-      }  
+      }
       .wrapper_right {
         .widgets {
           width: 100%;
-          min-width: 100px; 
+          min-width: 100px;
           span {
             writing-mode: vertical-rl; /* Вертикальное направление текста справа налево */
             font-size: 1.5rem;
@@ -135,7 +135,7 @@
   .container {
     height: 100dvh;
     .main {
-      .wrapper_left {  
+      .wrapper_left {
         display: none;
       }
 

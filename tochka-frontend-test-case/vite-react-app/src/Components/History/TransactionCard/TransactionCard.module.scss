@@ -14,17 +14,17 @@
     .service {
       width: 7.5rem;
       vertical-align: top;
-  
+
       font-weight: 600;
       font-size: 1rem;
       line-height: 125%;
-      letter-spacing: 0.01em;  
+      letter-spacing: 0.01em;
     }
-  
+
     .negative {
       color: #191919;
     }
-  
+
     .positive {
       color: #5cad9a;
     }
@@ -33,7 +33,7 @@
       flex: 1;
       display: flex;
       flex-direction: column;
-  
+
       .title {
         font-weight: 500;
         font-size: 1rem;
@@ -41,7 +41,7 @@
         letter-spacing: 0.01em;
         color: #191919;
       }
-  
+
       .description {
         font-weight: 400;
         font-size: 0.875rem;
@@ -54,7 +54,7 @@
         overflow: hidden; /* Обрезаем текст, который не вмещается */
         text-overflow: ellipsis; /* Добавляем многоточие */
       }
-  
+
       .optionalDescription {
         font-weight: 400;
         font-size: 0.75rem;
@@ -115,7 +115,7 @@
     padding: 15px 0;
     position: relative;
     flex-direction: row-reverse;
-  
+
     .withoutLogo {
       display: flex;
       flex-direction: column;
@@ -130,7 +130,7 @@
       .service {
         width: auto;
       }
-  
+
       .info {
         gap: 5px;
       }

@@ -11,15 +11,24 @@ import Widget from '/Filled/Widget.svg';
 type ButtonProps = {
   id: string;
   name: string;
-  icon: string,
+  icon: string;
   onClick: (id: string) => void;
   isActive: boolean;
 };
 
-const Button: React.FC<ButtonProps> = ({ id, name, icon, onClick, isActive }) => {
+const Button: React.FC<ButtonProps> = ({
+  id,
+  name,
+  icon,
+  onClick,
+  isActive,
+}) => {
   return (
-    <button 
-      className={classNames(styles.mobile_menu_button, isActive ? styles.active : '' )}
+    <button
+      className={classNames(
+        styles.mobile_menu_button,
+        isActive ? styles.active : ''
+      )}
       onClick={() => onClick(id)}
     >
       <div
@@ -49,24 +58,24 @@ const FooterMenu = () => {
     { id: '3', name: 'Платежи', icon: Payments },
     { id: '4', name: 'Сервисы', icon: Widget },
     { id: '5', name: 'Чат', icon: Chat },
-  ]  
+  ];
   return (
     <footer className={styles.mobile_menu}>
       {buttons.map((button) => {
         const { id, name, icon } = button;
         return (
           <Button
-          key={id}
-          id={id}
-          name={name}
-          icon={icon}
-          onClick={() => handle(id)}
-          isActive={id === activeBtn}
+            key={id}
+            id={id}
+            name={name}
+            icon={icon}
+            onClick={() => handle(id)}
+            isActive={id === activeBtn}
           />
-        )
+        );
       })}
     </footer>
-  )
-}
+  );
+};
 
 export default FooterMenu;

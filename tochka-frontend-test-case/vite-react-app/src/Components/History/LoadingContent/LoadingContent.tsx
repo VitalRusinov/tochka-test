@@ -22,7 +22,7 @@ const LoadingContent = () => {
         <div className={styles.interiorEmptyBlock3}></div>
       </div>
     </div>
-  )
-}
+  );
+};
 
 export default LoadingContent;
